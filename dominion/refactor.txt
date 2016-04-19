@@ -2,7 +2,7 @@ Isaac Stallcup
 CS 362 Spring 2016
 Assignment 1 - Refactoring details
 
-council room:
+council room: refactored functino play_council_room
 
 To refactor, I created a function play_council_room 
 (with return type int for error checking). It is
@@ -23,7 +23,8 @@ cardEffect I return failure if success is not 0
 and otherwise return 0 as in the original functionality
 of the switch statement.
 
-smithy:
+smithy: refactored function play_smithy
+
 To refactor smithy, I again first examined the
 variables needed in the existing smithy functionality.
 They are currentPlayer, state, and handPos. Smithy
@@ -33,3 +34,16 @@ complete this functionality, again with error checking
 for drawCard as in the council room function.
 Finally, I performed similar error checking as in
 council room.
+
+village: refactored function play_village
+
+To refactor village, first I looked at the functionality
+in cardEffect (+1 card, +2 actions) and then which
+parameters were needed (currentPlayer, pointer to 
+gameState state, handPos) and copied them into
+the new function. I used existing functionality
+to draw a card (with error checking as in the
+other functions), increased the number of actions,
+and discarded the card before returning 0. Finally,
+I used the same error checking scheme in cardEffect
+as in the other refactorings.

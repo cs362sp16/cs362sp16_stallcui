@@ -671,6 +671,21 @@ int play_smithy(int currentPlayer, struct gameState *state, int handPos)
 	return 0;
 }
 
+//refactored out of cardEffect by Isaac Stallcup
+int play_village(int currentPlayer, struct gameState *state, int handPos)
+{
+	if (-1 == drawCard(currentPlayer, state))
+		return -1;
+	
+	state->numActions = state->numActions + 2;
+
+	discardCard(handPos, currentPlayer, state, 0);
+
+	return 0;
+
+}
+
+
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
   int i;
@@ -863,6 +878,9 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 		
     case smithy:
 	  success = play_smithy(currentPlayer, state, handPos);
+	  if (success != 0)
+		  return -1;
+	  else return 0;
      /*
 	  //+3 Cards
       for (i = 0; i < 3; i++)
@@ -875,7 +893,13 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 	*/	
     case village:
-      //+1 Card
+		success = play_village(currentPlayer, state, handPos);
+		if (success != 0)
+			return -1;
+		else return 0;
+
+      /*
+	  //+1 Card
       drawCard(currentPlayer, state);
 			
       //+2 Actions
@@ -884,7 +908,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       //discard played card from hand
       discardCard(handPos, currentPlayer, state, 0);
       return 0;
-		
+		*/
     case baron:
       state->numBuys++;//Increase buys by 1!
       if (choice1 > 0){//Boolean true or going to discard an estate
