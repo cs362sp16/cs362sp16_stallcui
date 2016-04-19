@@ -643,18 +643,32 @@ int getCost(int cardNumber)
   return -1;
 }
 
+//refactored out of cardEffect by Isaac Stallcup
 int play_council_room(int currentPlayer, struct gameState *state, int handPos)
 {
 	int i;
 	for (i = 0; i < 4; i++)
 		if (-1 == drawCard(currentPlayer, state))
 			return -1;
-	
+
 	state->numBuys++;	
 
     discardCard(handPos, currentPlayer, state, 0);
 	
-	return 1;
+	return 0;
+}
+
+//refactored out of cardEffect by Isaac Stallcup
+int play_smithy(int currentPlayer, struct gameState *state, int handPos)
+{
+	int i;
+	for (i = 0; i < 3; i++)
+		if (-1 == drawCard(currentPlayer, state))
+			return -1;
+
+	discardCard(handPos, currentPlayer, state, 0);
+
+	return 0;
 }
 
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
@@ -703,7 +717,10 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 			
     case council_room:
-	 success = play_council_room(currentPlayer, state, handPos);
+	  success = play_council_room(currentPlayer, state, handPos);
+	  if (success != 0)
+		  return -1;
+	  else return 0;
     /*  //+4 Cards
       for (i = 0; i < 4; i++)
 	{
@@ -845,7 +862,9 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case smithy:
-      //+3 Cards
+	  success = play_smithy(currentPlayer, state, handPos);
+     /*
+	  //+3 Cards
       for (i = 0; i < 3; i++)
 	{
 	  drawCard(currentPlayer, state);
@@ -854,7 +873,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       //discard card from hand
       discardCard(handPos, currentPlayer, state, 0);
       return 0;
-		
+	*/	
     case village:
       //+1 Card
       drawCard(currentPlayer, state);

@@ -23,4 +23,13 @@ cardEffect I return failure if success is not 0
 and otherwise return 0 as in the original functionality
 of the switch statement.
 
-
+smithy:
+To refactor smithy, I again first examined the
+variables needed in the existing smithy functionality.
+They are currentPlayer, state, and handPos. Smithy
+draws three cards, then discards the card from the
+hand; I used existing draw and discard functions to
+complete this functionality, again with error checking
+for drawCard as in the council room function.
+Finally, I performed similar error checking as in
+council room.
