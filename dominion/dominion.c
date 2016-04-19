@@ -685,6 +685,22 @@ int play_village(int currentPlayer, struct gameState *state, int handPos)
 
 }
 
+//refactored out of cardEffect by Isaac Stallcup
+int play_salvager(int currentPlayer, struct gameState *state, int handPos, int choice1)
+{
+
+	state->numBuys++;
+	if (choice1)
+	{
+		state->coins = state->coins + getCost(handCard(choice1,state));
+		discardCard(choice1, currentPlayer, state, 1);
+	}
+
+	discardCard(handPos, currentPlayer, state, 0);
+	return 0;
+
+}
+
 
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
@@ -1223,7 +1239,11 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case salvager:
-      //+1 buy
+		play_salvager(currentPlayer, state, handPos, choice1);
+		return 0;
+
+      /*
+	  //+1 buy
       state->numBuys++;
 			
       if (choice1)
@@ -1237,7 +1257,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       //discard card
       discardCard(handPos, currentPlayer, state, 0);
       return 0;
-		
+	*/	
     case sea_hag:
       for (i = 0; i < state->numPlayers; i++){
 	if (i != currentPlayer){

@@ -47,3 +47,17 @@ other functions), increased the number of actions,
 and discarded the card before returning 0. Finally,
 I used the same error checking scheme in cardEffect
 as in the other refactorings.
+
+
+salvager: refactored function play_salvager
+
+I determined a new function has to be passed the vars
+choice1, a pointer to state, currentPlayer and handPos.
+Salvager then gives +1 buy, and if choice1, gives
+coins equal to a chosen card's cost that is then trashed.
+This means that the function will need to discard the chosen
+card as well as the salvager card. Using the built-in 
+functionalities for discarding, getting coins, and increasing
+the nubmer of buys, I wrote the play_salvager function,
+then called it in  the appropriate part of the switch statement
+in cardEffect.
