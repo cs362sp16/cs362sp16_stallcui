@@ -1,0 +1,26 @@
+Isaac Stallcup
+CS 362 Spring 2016
+Assignment 1 - Refactoring details
+
+council room:
+
+To refactor, I created a function play_council_room 
+(with return type int for error checking). It is
+called in the appropriate place in cardEffect. I then
+examined the current implementation of council
+room in order to determine which parameters to pass
+to the play_council_room function; these were
+currentPlayer, a pointer to the gameState state, 
+and handPos. I then implemented drawing four cards
+(again with error checking in order to handle
+errors in drawCard). I then increased the number
+of buys in the turn, then discarded the council
+room card via the discardCard function, and returned
+success. In cardEffect, I created a new variable to 
+store the result of play_council_room, and in
+cardEffect I return failure if success is not 0
+(the default success value of play_council_room),
+and otherwise return 0 as in the original functionality
+of the switch statement.
+
+
