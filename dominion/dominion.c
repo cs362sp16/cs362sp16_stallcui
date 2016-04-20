@@ -577,6 +577,7 @@ int drawCard(int player, struct gameState *state)
     state->handCount[player]++;//Increment hand count
   }
 
+
   return 0;
 }
 
@@ -701,6 +702,26 @@ int play_salvager(int currentPlayer, struct gameState *state, int handPos, int c
 
 }
 
+//refactored out of cardEffect by Isaac Stallcup
+int play_steward(int currentPlayer, struct gameState *state, int handPos, int choice1, int choice2, int choice3)
+{
+	int i;
+	if (choice1 == 1)
+	for (i = 0; i < 2; i++)
+		if (-1 == drawCard(currentPlayer, state))
+			return -1;
+	
+	if (choice1 == 2)
+		state->coins = state->coins + 2;
+	else
+	{
+		discardCard(choice2, currentPlayer, state, 1);
+		discardCard(choice3, currentPlayer, staet, 1);
+	}
+
+	discardCard(handPos, currentPlayer, state, 0);
+	return 0;
+}
 
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
@@ -1039,7 +1060,12 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case steward:
-      if (choice1 == 1)
+		success = play_steward(currentPlayer, state, handPos, choice1, choice2, choice3);
+		if (success != 0)
+			return -1;
+		else return 9;
+/*
+	  if (choice1 == 1)
 	{
 	  //+2 cards
 	  drawCard(currentPlayer, state);
@@ -1060,7 +1086,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       //discard card from hand
       discardCard(handPos, currentPlayer, state, 0);
       return 0;
-		
+*/		
     case tribute:
       if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1){
 	if (state->deckCount[nextPlayer] > 0){

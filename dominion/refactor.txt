@@ -61,3 +61,17 @@ functionalities for discarding, getting coins, and increasing
 the nubmer of buys, I wrote the play_salvager function,
 then called it in  the appropriate part of the switch statement
 in cardEffect.
+
+steward: refactored function play_steward
+
+I first determined the arugments needed to pass to the
+play_steward function; these are choice1, currentPlayer, a
+pointer to state, choice2, choice3, and handPos. Then, as the
+function of the steward is to either draw 2 cards, gain 2
+coins, or trash 2 cards from your hand, I implemented each
+feature based on the choice1 variable's value with the existing
+interface for drawing cards, gaining coins and trashing cards.
+I did this in an error checking implemetnation similar to that 
+of previous refactored functions, both within the function
+(with drawCard) and in the switch statement in cardEffect, where
+the call to play_steward is located.
