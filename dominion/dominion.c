@@ -716,7 +716,7 @@ int play_steward(int currentPlayer, struct gameState *state, int handPos, int ch
 	else
 	{
 		discardCard(choice2, currentPlayer, state, 1);
-		discardCard(choice3, currentPlayer, staet, 1);
+		discardCard(choice3, currentPlayer, state, 1);
 	}
 
 	discardCard(handPos, currentPlayer, state, 0);
