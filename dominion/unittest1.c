@@ -1,6 +1,6 @@
+#include <stdio.h>
 #include "dominion.h"
 #include "tests.h"
-#include <stdio.h>
 
 int main()
 {
@@ -11,5 +11,8 @@ int main()
 
 	int k[10] = {adventurer, council_room,
 	  feast, gardens, mine, smithy, village, baron, minion, tribute};
+
+	int r = initializeGame(2, k, 5, &g);
+
 
 }

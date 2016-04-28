@@ -1,3 +1,7 @@
+#ifndef _TESTS_H
+#define _TESTS_H
+
+#include "dominion.h"
 #include <stdio.h>
 
 int failure = 0;
@@ -18,3 +22,5 @@ void checkassert()
 		printf("TEST COMPLETED SUCCESSFULLY.\n");
 	}
 }
+
+#endif
