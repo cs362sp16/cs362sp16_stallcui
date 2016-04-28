@@ -40,16 +40,17 @@ cardtest4: cardtest4.c dominion.o rngs.o
 	gcc -o cardtest4 cardtest4.c -g dominion.o rngs.o $(CFLAGS)
 
 buildtests: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
+	@echo "~~build success~~"
 
 runtests:
-	./cardtest1 
-	./cardtest2 
-	./cardtest3 
-	./cardtest4 
-	./unittest1 
-	./unittest2 
-	./unittest3 
-	./unittest4
+	@./cardtest1 
+	@./cardtest2 
+	@./cardtest3 
+	@./cardtest4 
+	@./unittest1 
+	@./unittest2 
+	@./unittest3 
+	@./unittest4
 
 suite: buildtests runtests
 
