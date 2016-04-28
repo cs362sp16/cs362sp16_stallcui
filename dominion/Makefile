@@ -39,9 +39,17 @@ cardtest3: cardtest3.c
 cardtest4: cardtest4.c
 	gcc -o cardtest4 cardtest4.c -g $(CFLAGS)
 
-tests:
-	unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
+tests: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
 
+suite:
+	./cardtest1 
+	./cardtest2 
+	./cardtest3 
+	./cardtest4 
+	./unittest1 
+	./unittest2 
+	./unittest3 
+	./unittest4
 
 all: playdom player tests
 
