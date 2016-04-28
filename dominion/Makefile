@@ -15,32 +15,58 @@ interface.o: interface.h interface.c
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-unittest1: unittest1.c dominion.o rngs.o
-	gcc -o unittest1 unittest1.c -g dominion.o rngs.o $(CFLAGS)
+unittest1: unittest1.c dominion.o rngs.o interface.o
+	@gcc -o unittest1 unittest1.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
-unittest2: unittest2.c dominion.o rngs.o
-	gcc -o unittest2 unittest2.c -g dominion.o rngs.o $(CFLAGS)
+unittest2: unittest2.c dominion.o rngs.o interface.o
+	@gcc -o unittest2 unittest2.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
-unittest3: unittest3.c dominion.o rngs.o
-	gcc -o unittest3 unittest3.c -g dominion.o rngs.o $(CFLAGS)
+unittest3: unittest3.c dominion.o rngs.o interface.o
+	@gcc -o unittest3 unittest3.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
-unittest4: unittest4.c dominion.o rngs.o
-	gcc -o unittest4 unittest4.c -g dominion.o rngs.o $(CFLAGS)
+unittest4: unittest4.c dominion.o rngs.o interface.o
+	@gcc -o unittest4 unittest4.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
-cardtest1: cardtest1.c dominion.o rngs.o
-	gcc -o cardtest1 cardtest1.c -g dominion.o rngs.o $(CFLAGS)
+cardtest1: cardtest1.c dominion.o rngs.o interface.o
+	@gcc -o cardtest1 cardtest1.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
-cardtest2: cardtest2.c dominion.o rngs.o
-	gcc -o cardtest2 cardtest2.c -g dominion.o rngs.o $(CFLAGS)
+cardtest2: cardtest2.c dominion.o rngs.o interface.o
+	@gcc -o cardtest2 cardtest2.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
-cardtest3: cardtest3.c dominion.o rngs.o
-	gcc -o cardtest3 cardtest3.c -g dominion.o rngs.o $(CFLAGS)
+cardtest3: cardtest3.c dominion.o rngs.o interface.o
+	@gcc -o cardtest3 cardtest3.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
-cardtest4: cardtest4.c dominion.o rngs.o
-	gcc -o cardtest4 cardtest4.c -g dominion.o rngs.o $(CFLAGS)
+cardtest4: cardtest4.c dominion.o rngs.o interface.o
+	@gcc -o cardtest4 cardtest4.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
 buildtests: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
 	@echo "~~build success~~"
+
+runtestslog: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 playdom
+	@./unittest1 
+	@echo "GCOV AFTER UNIT TEST 1" >> results.out
+	@gcov dominion.c >> results.out
+	@./unittest2 
+	@echo "GCOV AFTER UNIT TEST 2" >> results.out
+	@gcov dominion.c >> results.out
+	@./unittest3 
+	@echo "GCOV AFTER UNIT TEST 3" >> results.out
+	@gcov dominion.c >> results.out
+	@./unittest4
+	@echo "GCOV AFTER UNIT TEST 4" >> results.out
+	@gcov dominion.c >> results.out
+	@./cardtest1 >> results.out
+	@echo "GCOV AFTER CARD TEST 1" >> results.out
+	@gcov dominion.c >> results.out
+	@./cardtest2 
+	@echo "GCOV AFTER CARD TEST 2" >> results.out
+	@gcov dominion.c >> results.out
+	@./cardtest3 
+	@echo "GCOV AFTER CARD TEST 3" >> results.out
+	@gcov dominion.c >> results.out
+	@./cardtest4 
+	@echo "GCOV AFTER CARD TEST 4" >> results.out
+	@gcov dominion.c >> results.out
 
 runtests:
 	@./cardtest1 
@@ -51,6 +77,8 @@ runtests:
 	@./unittest2 
 	@./unittest3 
 	@./unittest4
+
+log: buildtests runtestslog
 
 suite: buildtests runtests
 

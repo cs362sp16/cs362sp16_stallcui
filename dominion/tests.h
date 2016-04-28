@@ -6,13 +6,15 @@
 
 int failure = 0;
 
-int customassert(int b, char* msg)
+int cassert(int b, char* msg)
 {
 	if (b == 0)
 	{
 		printf("FAILED ASSERTION: %s\n", msg);
 		failure = 1;
+		return 1;
 	}
+	return 0;
 }
 
 void checkassert()
