@@ -1,0 +1,13 @@
+4. Code coverage
+
+My code coverage was about 35%; the first test (on initializeGame)
+added the largest amount, around 15%. This makes sense since a large
+portion of the code of dominion.c is in initialization. Next was
+the buyCard test, which added around 5% code coverage. This also makes
+sense, as buyCard calls several other functions. Finally, the rest
+of the tests added between 1-5% test coverage up to the total of
+35%. This means, to me, that the most relevant tests were those that
+tested initialization and buying. More in-depth tests would be
+required to gain better code coverage for the rest of the functions,
+but the rest of the functions are relatively small compared to
+initializeGame.
