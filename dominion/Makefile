@@ -42,31 +42,31 @@ cardtest4: cardtest4.c dominion.o rngs.o interface.o
 buildtests: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
 
 runtestslog: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 playdom
-	@rm -f "results.out"
+	@rm -f "unittestresults.out"
 	@./unittest1 
-	@echo "GCOV AFTER UNIT TEST 1" >> results.out
-	@gcov dominion.c >> results.out
+	@echo "GCOV AFTER UNIT TEST 1" >> unittestresults.out
+	@gcov dominion.c >> unittestresults.out
 	@./unittest2 
-	@echo "GCOV AFTER UNIT TEST 2" >> results.out
-	@gcov dominion.c >> results.out
+	@echo "GCOV AFTER UNIT TEST 2" >> unittestresults.out
+	@gcov dominion.c >> unittestresults.out
 	@./unittest3 
-	@echo "GCOV AFTER UNIT TEST 3" >> results.out
-	@gcov dominion.c >> results.out
+	@echo "GCOV AFTER UNIT TEST 3" >> unittestresults.out
+	@gcov dominion.c >> unittestresults.out
 	@./unittest4
-	@echo "GCOV AFTER UNIT TEST 4" >> results.out
-	@gcov dominion.c >> results.out
-	@./cardtest1 >> results.out
-	@echo "GCOV AFTER CARD TEST 1" >> results.out
-	@gcov dominion.c >> results.out
+	@echo "GCOV AFTER UNIT TEST 4" >> unittestresults.out
+	@gcov dominion.c >> unittestresults.out
+	@./cardtest1 >> unittestresults.out
+	@echo "GCOV AFTER CARD TEST 1" >> unittestresults.out
+	@gcov dominion.c >> unittestresults.out
 	@./cardtest2 
-	@echo "GCOV AFTER CARD TEST 2" >> results.out
-	@gcov dominion.c >> results.out
+	@echo "GCOV AFTER CARD TEST 2" >> unittestresults.out
+	@gcov dominion.c >> unittestresults.out
 	@./cardtest3 
-	@echo "GCOV AFTER CARD TEST 3" >> results.out
-	@gcov dominion.c >> results.out
+	@echo "GCOV AFTER CARD TEST 3" >> unittestresults.out
+	@gcov dominion.c >> unittestresults.out
 	@./cardtest4 
-	@echo "GCOV AFTER CARD TEST 4" >> results.out
-	@gcov dominion.c >> results.out
+	@echo "GCOV AFTER CARD TEST 4" >> unittestresults.out
+	@gcov dominion.c >> unittestresults.out
 
 runtests:
 	@./cardtest1 
@@ -85,8 +85,8 @@ suite: buildtests runtests
 all: playdom player buildtests
 
 clean:
-	rm -f *.o playdom.exe playdom test.exe test tests player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 player.exe testInit testInit.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM
+	rm -f *.o unittestresults.out playdom.exe playdom test.exe test tests player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 player.exe testInit testInit.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM
 
 coverage: clean all runtestslog
-	cat results.out | grep -B 2 "executed"
+	cat unittestresults.out | grep -B 2 "executed"
 
