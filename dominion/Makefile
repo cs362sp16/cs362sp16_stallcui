@@ -40,9 +40,9 @@ cardtest4: cardtest4.c dominion.o rngs.o interface.o
 	@gcc -o cardtest4 cardtest4.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
 buildtests: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
-	@echo "~~build success~~"
 
 runtestslog: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 playdom
+	@rm -f "results.out"
 	@./unittest1 
 	@echo "GCOV AFTER UNIT TEST 1" >> results.out
 	@gcov dominion.c >> results.out
@@ -82,7 +82,11 @@ log: buildtests runtestslog
 
 suite: buildtests runtests
 
-all: playdom player
+all: playdom player buildtests
 
 clean:
 	rm -f *.o playdom.exe playdom test.exe test tests player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 player.exe testInit testInit.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM
+
+coverage: clean all runtestslog
+	cat results.out | grep -B 2 "executed"
+

@@ -14,7 +14,13 @@ int cassert(int b, char* msg)
 		failure = 1;
 		return 1;
 	}
+	else printf("assertion succeeded: %s\n", msg);
 	return 0;
+}
+
+void testfun(char* name)
+{
+	printf("testing function %s...\n", name);
 }
 
 void checkassert()

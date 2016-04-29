@@ -9,13 +9,17 @@ int main()
 	printf("UNIT TEST ONE -- RUNNING\n");	
 
 	struct gameState g;
+	int r, i;
+	int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
 
-	int k[10] = {adventurer, council_room,
-	  feast, gardens, mine, smithy, village, baron, minion, tribute};
+	//test initializeGame
+	testfun("initializeGame");
+	r = initializeGame(2, k, 5, &g);
+	cassert(r == 0, "call to initializeGame with 2 players, k array");
+	r = g.handCount[0];
+	cassert(r == 5, "#cards in player 0's hand is 5"); 	
+	r = g.handCount[1];
+	cassert(r == 0, "#cards in player 1's hand is 0");
 
-	int r = initializeGame(2, k, 5, &g);
-	cassert(r, "initializeGame failure");
-	if (r == 0)
-		printState(&g);
-	
+	printf("UNIT TEST ONE -- FINISHED\n\n");
 }
