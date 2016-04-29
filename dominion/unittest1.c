@@ -34,4 +34,6 @@ int main()
 	cassert(r == 0, "#cards in player 1's hand is 0");
 
 	printf("UNIT TEST ONE -- FINISHED\n\n");
+
+	return 0;
 }
