@@ -15,6 +15,15 @@ interface.o: interface.h interface.c
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
+randomtestcard1: randomtestcard1.c dominion.o rngs.o interface.o
+	@gcc -o randomtestcard1 randomtestcard1.c -g dominion.o rngs.o interface.o $(CFLAGS)
+
+randomtestcard2: randomtestcard2.c dominion.o rngs.o interface.o
+	@gcc -o randomtestcard2 randomtestcard2.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	
+randomtestadventurer: randomtestadventurer.c dominion.o rngs.o interface.o
+	@gcc -o randomtestadventurer randomtestadventurer.c -g dominion.o rngs.o interface.o $(CFLAGS)
+
 unittest1: unittest1.c dominion.o rngs.o interface.o
 	@gcc -o unittest1 unittest1.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
@@ -40,6 +49,10 @@ cardtest4: cardtest4.c dominion.o rngs.o interface.o
 	@gcc -o cardtest4 cardtest4.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
 buildtests: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
+
+buildrandom: randomtestcard1 randomtestcard2 randomtestadventurer
+
+runrandomlog: buildrandom
 
 runtestslog: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 playdom
 	@rm -f "unittestresults.out"
@@ -68,6 +81,11 @@ runtestslog: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtes
 	@echo "GCOV AFTER CARD TEST 4" >> unittestresults.out
 	@gcov dominion.c >> unittestresults.out
 
+runrandom:
+	@./randomtestcard1 42 
+	@./randomtestcard2 42
+	@./randomtestadventurer 42
+
 runtests:
 	@./cardtest1 
 	@./cardtest2 
@@ -82,10 +100,10 @@ log: buildtests runtestslog
 
 suite: buildtests runtests
 
-all: playdom player buildtests
+all: playdom player buildtests buildrandom
 
 clean:
-	rm -f *.o unittestresults.out playdom.exe playdom test.exe test tests player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 player.exe testInit testInit.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM
+	rm -f *.o unittestresults.out playdom.exe playdom test.exe test tests player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 player.exe testInit testInit.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM randomtestcard1 randomtestcard2 randomtestadventurer
 
 coverage: clean all runtestslog
 	cat unittestresults.out | grep -B 2 "executed"

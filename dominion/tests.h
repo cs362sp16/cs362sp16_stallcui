@@ -4,6 +4,15 @@
 #include "dominion.h"
 #include <stdio.h>
 
+int seedchkargs(int argc, int seed)
+{
+	if (cassert(argc == 2, "seedchkargs: # args input = 1"))
+		return 1;
+	else if (cassert(seed != 0, "seedchkargs: input != 0, is #"))
+		return 1;
+	else return 0;
+}
+
 int failure = 0;
 
 int cassert(int b, char* msg)
