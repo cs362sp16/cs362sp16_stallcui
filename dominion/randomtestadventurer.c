@@ -17,6 +17,18 @@ int oracle(struct gameState g, int szhand, int szdeck, int ncoins, int ndiscard)
 	cassert(r != ndiscard, "# cards in dscd has changed");
 
 	//for failing test cases, dump results?
+	if (failure == 1)
+	{
+		//DUMP
+		printf("FAILURE DETECTED\n");
+		printHand(0,&g);
+		printDeck(0,&g);
+		printDiscard(0,&g);
+		printPlayed(0,&g);
+		printState(&g);
+		printSupply(&g);
+		//perhaps tailor dump to type of error?
+	}
 
 	//reset failure variable
 	failure = 0;
