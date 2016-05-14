@@ -13,7 +13,8 @@ int oracle(struct gameState g, int szhand, int szdeck, int ncoins, int ndiscard)
 	cassert(r != szdeck, "# cards in deck has changed");
 	r = g.coins;
 	cassert(r != ncoins, "# coins in hand has changed");
-	r = g.discardCount[0];
+	r = g.discardCount[0]; //only shoddy test case; see if both cards drawn
+							//were both $ cards, in which case is OK
 	cassert(r != ndiscard, "# cards in dscd has changed");
 
 	//for failing test cases, dump results?
@@ -38,6 +39,12 @@ int stategen(struct gameState g)
 {
 	int i, q, r, s;
 	char* name;
+	
+	//simulate effect of having already played the game of dominion
+	//for some time by adding random cards to the deck
+	//also serves to test interactions between adventurer and hopefully
+	//most if not all other cards
+
 	//how many cards to add to deck? 
 	//either random # between 0 and 100
 	s = rand() % 50;
@@ -77,6 +84,8 @@ int stategen(struct gameState g)
 
 	//run tests
 	oracle(g, szhand, szdeck, ncoins, ndiscard);
+	//improvements for future: also give oracle the state of program
+	//before card run as well as after card is run
 
 	return 0;
 }
