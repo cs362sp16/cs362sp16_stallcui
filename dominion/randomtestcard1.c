@@ -54,7 +54,7 @@ int stategen(struct gameState g)
 		
 		if ((i== 17) && (r % 25	== 0))
 		{
-			printf("Bad doggy!\n");
+//			printf("Bad doggy!\n");
 			g.deck[0][g.deckCount[0]] = -2;
 			g.deckCount[0]++;
 			badbit = 1;
@@ -90,7 +90,7 @@ int stategen(struct gameState g)
 //	printf("test case generated\n");
 
 	//run oracle here
-	printf("badbit = %d\n", badbit);
+//	printf("badbit = %d\n", badbit);
 	oracle(g, szhand, szdeck, badbit);
 	
 	return 0;

@@ -6,6 +6,7 @@
 
 int oracle(struct gameState g, int szhand, int szdeck, int ncoins, int ndiscard)
 {
+	printf("All-seeing oracle v1.0\n");
 	int r;
 	r = g.handCount[0];
 	cassert(r != szhand, "# cards in hand has changed");
@@ -22,15 +23,16 @@ int oracle(struct gameState g, int szhand, int szdeck, int ncoins, int ndiscard)
 	{
 		//DUMP
 		printf("FAILURE DETECTED\n");
-		printHand(0,&g);
-		printDeck(0,&g);
-		printDiscard(0,&g);
-		printPlayed(0,&g);
-		printState(&g);
-		printSupply(&g);
+//		printHand(0,&g);
+//		printDeck(0,&g);
+//		printDiscard(0,&g);
+//		printPlayed(0,&g);
+//		printState(&g);
+//		printSupply(&g);
 		//perhaps tailor dump to type of error?
 	}
 
+	printf("\n\n");
 	//reset failure variable
 	failure = 0;
 	return 0;

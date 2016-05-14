@@ -52,7 +52,6 @@ buildutests: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtes
 
 buildrandom: randomtestcard1 randomtestcard2 randomtestadventurer
 
-runrandomlog: buildrandom
 
 runutestslog: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 playdom
 	@rm -f "unittestresults.out"
@@ -81,20 +80,30 @@ runutestslog: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardte
 	@echo "GCOV AFTER CARD TEST 4" >> unittestresults.out
 	@gcov dominion.c >> unittestresults.out
 
-runrandom:
-	@./randomtestcard1 42 > randomtestcard1.out
-	@echo "GCOV AFTER RANDOM CARD TEST 1" >> randomtestcard1.out
+randomsuite:
+	@make clean
+	@make all
+	@./randomtestcard1 42
+	@echo "GCOV AFTER RANDOM CARD TEST 1" > randomtestcard1.out
 	@gcov -f dominion.c >> randomtestcard1.out
-	@./randomtestcard2 42 > randomtestcard2.out
-	@./randomtestadventurer 42 > randomtestadventurer.out
-	@echo "GCOV AFTER RANDOM ADVENTURER TEST" >> randomtestadventurer.out
+	@make clean
+	@make all
+	@./randomtestcard2 42
+	@echo "GCOV AFTER RANDOM CARD TEST 2" > randomtestcard2.out
+	@gcov -f dominion.c >> randomtestcard2.out
+	@make clean
+	@make all
+	@./randomtestadventurer 42
+	@echo "GCOV AFTER RANDOM ADVENTURER TEST" > randomtestadventurer.out
 	@gcov -f dominion.c >> randomtestadventurer.out #again, total coverage!
 
-runrandomlog: #runs all random tests, puts results in 1 convenient place
+runrandomlog: buildrandom #runs all random tests, puts results in 1 convenient place
 	@./randomtestcard1 42
 	@echo "GCOV AFTER RANDOM CARD TEST 1" > randomtestresults.out
 	@gcov dominion.c >> randomtestresults.out
 	@./randomtestcard2 42
+	@echo "GCOV AFTER RANDOM CARD TEST 2" >> randomtestresults.out
+	@gcov dominion.c >> randomtestresults.out #care; includes test #1
 	@./randomtestadventurer 42
 	@echo "GCOV AFTER RANDOM ADVENTURER TEST" >> randomtestresults.out
 	@gcov dominion.c >> randomtestresults.out #again, total coverage!
