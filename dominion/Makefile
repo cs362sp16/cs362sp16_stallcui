@@ -48,13 +48,13 @@ cardtest3: cardtest3.c dominion.o rngs.o interface.o
 cardtest4: cardtest4.c dominion.o rngs.o interface.o
 	@gcc -o cardtest4 cardtest4.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
-buildtests: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
+buildutests: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
 
 buildrandom: randomtestcard1 randomtestcard2 randomtestadventurer
 
 runrandomlog: buildrandom
 
-runtestslog: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 playdom
+runutestslog: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 playdom
 	@rm -f "unittestresults.out"
 	@./unittest1 
 	@echo "GCOV AFTER UNIT TEST 1" >> unittestresults.out
@@ -82,11 +82,24 @@ runtestslog: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtes
 	@gcov dominion.c >> unittestresults.out
 
 runrandom:
-	@./randomtestcard1 42 
+	@./randomtestcard1 42 > randomtestcard1.out
+	@echo "GCOV AFTER RANDOM CARD TEST 1" >> randomtestcard1.out
+	@gcov -f dominion.c >> randomtestcard1.out
+	@./randomtestcard2 42 > randomtestcard2.out
+	@./randomtestadventurer 42 > randomtestadventurer.out
+	@echo "GCOV AFTER RANDOM ADVENTURER TEST" >> randomtestadventurer.out
+	@gcov -f dominion.c >> randomtestadventurer.out #again, total coverage!
+
+runrandomlog: #runs all random tests, puts results in 1 convenient place
+	@./randomtestcard1 42
+	@echo "GCOV AFTER RANDOM CARD TEST 1" > randomtestresults.out
+	@gcov dominion.c >> randomtestresults.out
 	@./randomtestcard2 42
 	@./randomtestadventurer 42
+	@echo "GCOV AFTER RANDOM ADVENTURER TEST" >> randomtestresults.out
+	@gcov dominion.c >> randomtestresults.out #again, total coverage!
 
-runtests:
+runutests:
 	@./cardtest1 
 	@./cardtest2 
 	@./cardtest3 
@@ -96,14 +109,17 @@ runtests:
 	@./unittest3 
 	@./unittest4
 
-log: buildtests runtestslog
+log: buildutests runutestslog
 
-suite: buildtests runtests
+suite: buildutests runutests
 
-all: playdom player buildtests buildrandom
+all: playdom player buildutests buildrandom
+
+cleanout:
+	rm -f *.o playdom.exe playdom test.exe test tests player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 player.exe testInit testInit.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM randomtestcard1 randomtestcard2 randomtestadventurer *.out
 
 clean:
-	rm -f *.o unittestresults.out playdom.exe playdom test.exe test tests player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 player.exe testInit testInit.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM randomtestcard1 randomtestcard2 randomtestadventurer
+	rm -f *.o playdom.exe playdom test.exe test tests player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 player.exe testInit testInit.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM randomtestcard1 randomtestcard2 randomtestadventurer
 
 coverage: clean all runtestslog
 	cat unittestresults.out | grep -B 2 "executed"

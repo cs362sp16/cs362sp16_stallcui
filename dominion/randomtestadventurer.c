@@ -33,6 +33,7 @@ int oracle(struct gameState g, int szhand, int szdeck, int ncoins, int ndiscard)
 
 	//reset failure variable
 	failure = 0;
+	return 0;
 }
 
 int stategen(struct gameState g)

@@ -664,8 +664,7 @@ int play_smithy(int currentPlayer, struct gameState *state, int handPos)
 {
 	int i;
 	for (i = 0; i < 3; i++)
-		if (-1 == drawCard(currentPlayer, state))
-			return -1;
+		 drawCard(currentPlayer, state);
 
 	discardCard(handPos, currentPlayer, state, 0);
 
