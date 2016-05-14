@@ -4,7 +4,7 @@
 #include "dominion.h"
 #include "interface.h"
 
-int oracle(struct gameState g, int szhand, int szdeck)
+int oracle(struct gameState g, int szhand, int szdeck, int badbit)
 {
 	int r;
 	r = g.handCount[0];
@@ -12,10 +12,21 @@ int oracle(struct gameState g, int szhand, int szdeck)
 	r = g.deckCount[0];
 	cassert(r != szdeck, "# cards in deck has changed");
 
-	if (failure == 1)
+	if (failure == 1 && badbit == 0)
 	{
 		//DUMP
 		printf("FAILURE DETECTED\n");
+		printHand(0, &g);
+		printDeck(0, &g);
+	}
+	else if (failure == 1 && badbit == 1)
+	{
+		printf("FAILURE DETECTED... But expected\n");
+	}
+	else if (failure == 0 && badbit == 1)
+	{
+		printf("FAILURE DETECTED\n");
+		printf("Bad input did not cause error.\n");
 		printHand(0, &g);
 		printDeck(0, &g);
 	}
@@ -31,6 +42,7 @@ int stategen(struct gameState g)
 	//test smithy
 	s = rand() % 500; //run lots of times!
 	//add random # of random valid cards to the deck
+	printf("%d\n",gainCard(13, &g, 2, 0));
 	for (i = 0; i < s; i++)
 	{
 		//add in a chance to insert a truly bad card into the deck in order
@@ -40,10 +52,10 @@ int stategen(struct gameState g)
 		r = rand() % treasure_map + 1;
 		
 		
-		if ((i== 19) && (r % 25	== 0))
+		if ((i== 17) && (r % 25	== 0))
 		{
 			printf("Bad doggy!\n");
-			g.deck[0][g.deckCount[0]] = -1;
+			g.deck[0][g.deckCount[0]] = -2;
 			g.deckCount[0]++;
 			badbit = 1;
 			break;
@@ -68,15 +80,18 @@ int stategen(struct gameState g)
 	shuffle(0, &g); //shuffle when we're done, be considerate! don't cheat
 
 	//collect some stuff for oracle here
-
 	
+	int szhand = g.handCount[0];
+	int szdeck = g.deckCount[0];
 
-	gainCard(smithy,&g,2,0);
+	//printHand(0,&g);
 	playCard(5,0,0,0,&g);
 
 //	printf("test case generated\n");
 
 	//run oracle here
+	printf("badbit = %d\n", badbit);
+	oracle(g, szhand, szdeck, badbit);
 	
 	return 0;
 }
