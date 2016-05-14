@@ -57,56 +57,56 @@ runutestslog: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardte
 	@rm -f "unittestresults.out"
 	@./unittest1 
 	@echo "GCOV AFTER UNIT TEST 1" >> unittestresults.out
-	@gcov dominion.c >> unittestresults.out
+	@gcov -fb dominion.c >> unittestresults.out
 	@./unittest2 
 	@echo "GCOV AFTER UNIT TEST 2" >> unittestresults.out
-	@gcov dominion.c >> unittestresults.out
+	@gcov -fb dominion.c >> unittestresults.out
 	@./unittest3 
 	@echo "GCOV AFTER UNIT TEST 3" >> unittestresults.out
-	@gcov dominion.c >> unittestresults.out
+	@gcov -fb dominion.c >> unittestresults.out
 	@./unittest4
 	@echo "GCOV AFTER UNIT TEST 4" >> unittestresults.out
-	@gcov dominion.c >> unittestresults.out
+	@gcov -fb dominion.c >> unittestresults.out
 	@./cardtest1 >> unittestresults.out
 	@echo "GCOV AFTER CARD TEST 1" >> unittestresults.out
-	@gcov dominion.c >> unittestresults.out
+	@gcov -fb dominion.c >> unittestresults.out
 	@./cardtest2 
 	@echo "GCOV AFTER CARD TEST 2" >> unittestresults.out
-	@gcov dominion.c >> unittestresults.out
+	@gcov -fb dominion.c >> unittestresults.out
 	@./cardtest3 
 	@echo "GCOV AFTER CARD TEST 3" >> unittestresults.out
-	@gcov dominion.c >> unittestresults.out
+	@gcov -fb dominion.c >> unittestresults.out
 	@./cardtest4 
 	@echo "GCOV AFTER CARD TEST 4" >> unittestresults.out
-	@gcov dominion.c >> unittestresults.out
+	@gcov -fb dominion.c >> unittestresults.out
 
 randomsuite:
 	@make clean
 	@make all
 	@./randomtestcard1 42
 	@echo "GCOV AFTER RANDOM CARD TEST 1" > randomtestcard1.out
-	@gcov -f dominion.c >> randomtestcard1.out
+	@gcov -fb dominion.c >> randomtestcard1.out
 	@make clean
 	@make all
 	@./randomtestcard2 42
 	@echo "GCOV AFTER RANDOM CARD TEST 2" > randomtestcard2.out
-	@gcov -f dominion.c >> randomtestcard2.out
+	@gcov -fb dominion.c >> randomtestcard2.out
 	@make clean
 	@make all
 	@./randomtestadventurer 42
 	@echo "GCOV AFTER RANDOM ADVENTURER TEST" > randomtestadventurer.out
-	@gcov -f dominion.c >> randomtestadventurer.out #again, total coverage!
+	@gcov -fb dominion.c >> randomtestadventurer.out #again, total coverage!
 
 runrandomlog: buildrandom #runs all random tests, puts results in 1 convenient place
 	@./randomtestcard1 42
 	@echo "GCOV AFTER RANDOM CARD TEST 1" > randomtestresults.out
-	@gcov dominion.c >> randomtestresults.out
+	@gcov -fb dominion.c >> randomtestresults.out
 	@./randomtestcard2 42
 	@echo "GCOV AFTER RANDOM CARD TEST 2" >> randomtestresults.out
-	@gcov dominion.c >> randomtestresults.out #care; includes test #1
+	@gcov -fb dominion.c >> randomtestresults.out #care; includes test #1
 	@./randomtestadventurer 42
 	@echo "GCOV AFTER RANDOM ADVENTURER TEST" >> randomtestresults.out
-	@gcov dominion.c >> randomtestresults.out #again, total coverage!
+	@gcov -fb dominion.c >> randomtestresults.out #again, total coverage!
 
 runutests:
 	@./cardtest1 
@@ -130,6 +130,8 @@ cleanout:
 clean:
 	rm -f *.o playdom.exe playdom test.exe test tests player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 player.exe testInit testInit.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM randomtestcard1 randomtestcard2 randomtestadventurer
 
-coverage: clean all runtestslog
-	cat unittestresults.out | grep -B 2 "executed"
+rcoverage: clean all runrandomlog
+	cat randomtestresults.out | grep -B 2 "executed"
 
+ucoverage: clean all runutestslog
+	cat unittestresults.out | grep -B 2 "executed"

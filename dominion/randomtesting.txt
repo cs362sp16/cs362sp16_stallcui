@@ -1,0 +1,19 @@
+Improving coverage for the random testing involved two things:
+adding to the section of code that is randomized, and adding
+to the elements of the code tested by the oracle. Efforts to
+break the code were giving bad cards to the deck in testing
+the smithy code. The test was thus adapted to account for 
+purposely bad tests that were meant to fail; if the input was
+bad, a flag was set, and used for additional comparisons along
+with the failure flag in the oracle() function.
+
+Random testing achieved a total of 33.92% of lines executed, with
+34.73% branch coverage, whereas unit testing resulted in 34.62%
+of lines and 38.93% of branches covered. Furthermore, unit testing
+has better fault detection, as it specifically is designed to test
+for known types of faults, whereas random testing blitzes code with
+random setups in an effort to find new ones, but if most faults are 
+already known unit tests will be more efficient. In adventurer, 14/14 of
+the lines in cardEffect were executed, giving it 100% of line
+coverage, and 100% branch coverage as well. To achieve this coverage,
+the tester only has to run once.
