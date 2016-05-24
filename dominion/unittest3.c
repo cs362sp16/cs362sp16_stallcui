@@ -10,7 +10,7 @@ int main()
 	printf("UNIT TEST THREE -- RUNNING\n");
 
 	struct gameState g;
-	int r, i;
+	int r;
 	int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
 
 	initializeGame(2, k, 5, &g);

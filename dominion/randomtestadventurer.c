@@ -42,7 +42,7 @@ int stategen(struct gameState g)
 {
 	int i, q, r, s;
 	char* name;
-	
+
 	//simulate effect of having already played the game of dominion
 	//for some time by adding random cards to the deck
 	//also serves to test interactions between adventurer and hopefully

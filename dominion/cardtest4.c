@@ -25,7 +25,7 @@ int main()
 	cassert(r == 0, "cutpurse played");
 
 	r = g.coins;
-	cassert(r != prevcoins, "# coins has changed");
+	cassert(r == 6, "# coins is 6");
 
 	r = g.handCount[1];
 	cassert(r == 4, "# cards in player 1's hand is 4 as they have copper");

@@ -13,8 +13,8 @@ int oracle(struct gameState g, int szhand, int* discards, int ncoins, int nbuys,
 	cassert(r != nbuys, "# buys is same");
 	if (choice == 1) //if chosen, discard estate, +$4
 	{
-		r = g.discard[0];
-		cassert(r != discards, "discarded cards has changed"); 
+		r = g.discard[0][0];
+		cassert(r != discards[0], "discarded cards has changed"); 
 		r = g.coins;
 		cassert(r != ncoins, "number of coins changed");
 	}
