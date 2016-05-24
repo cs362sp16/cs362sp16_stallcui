@@ -7,6 +7,7 @@ CFLAGS = -Wall -fpic -coverage -lm
 
 help:
 	@echo "useful commands:"
+	@echo "testdominion - creates testdominion.out from testdominion.c"
 	@echo "all - build all available runnable files"
 	@echo "clean - removes all generated files"
 	@echo "tidy - removes all generated files EXCEPT log files"
@@ -19,8 +20,7 @@ help:
 
 test: all suiterandom suiteunit coverage
 
-
-all: playdom player buildunit buildrandom
+all: playdom player buildunit buildrandom buildtestdom
 
 clean:
 	rm -f *.o *.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM cardtest1 cardtest2 cardtest3 cardtest4 log playdom player randomtestadventurer randomtestcard1 randomtestcard2 unittest1 unittest2 unittest3 unittest4 *.out 
@@ -31,6 +31,13 @@ tidy: #leaves .out files alone
 buildunit: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
 
 buildrandom: randomtestcard1 randomtestcard2 randomtestadventurer
+
+buildtestdom: dominion.o rngs.o testdominion.c
+	gcc -o testdominion testdominion.c -g dominion.o rngs.o $(CFLAGS)
+
+testdominion: all buildtestdom #runs testdominion, generates testdominion.out
+	@echo "TESTING DOMINION.C" > testdominion.out
+	@./testdominion 42 >> testdominion.out
 
 #coverage commands
 #run tests, output coverage data for fine dominion.c to
