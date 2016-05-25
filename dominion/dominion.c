@@ -424,6 +424,7 @@ int isGameOver(struct gameState *state) {
 	}
 	if ( j >= 3)
 	{
+		printf("GAME IS OVER!\n");
 		return 1;
 	}
 
@@ -1247,6 +1248,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 				{ //reveal each card in hand
 					if (state->hand[i][j] == copper)
 					{ //if that card is a copper
+						printf("found copper at pos %d by player %d\n", j, i);
 						discardCard(j, i, state, 0);
 						break; //discard it and end the hand examination
 					}

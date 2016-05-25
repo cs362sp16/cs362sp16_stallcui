@@ -32,8 +32,8 @@ buildunit: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3
 
 buildrandom: randomtestcard1 randomtestcard2 randomtestadventurer
 
-buildtestdom: dominion.o rngs.o testdominion.c
-	gcc -o testdominion testdominion.c -g dominion.o rngs.o $(CFLAGS)
+buildtestdom: dominion.o rngs.o interface.o testdominion.c
+	gcc -o testdominion testdominion.c -g dominion.o interface.o rngs.o $(CFLAGS)
 
 testdominion: all buildtestdom #runs testdominion, generates testdominion.out
 	@echo "TESTING DOMINION.C" > testdominion.out
