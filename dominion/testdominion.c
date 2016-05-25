@@ -5,7 +5,7 @@
 #include "rngs.h"
 #include <stdlib.h>
 
-#define VERBOSE 1 
+#define VERBOSE 0
 
 int takeTurn(struct gameState *g, int pnum)
 {
@@ -54,6 +54,11 @@ int takeTurn(struct gameState *g, int pnum)
 	if (VERBOSE == 1)
 		printSupply(g);
 
+	//print out hands to ensure they're the same
+	printHand(pnum, g);
+
+	//BUY SHIT
+
 	for (i = 0; i < 10; i++) //up to 10 times...
 	{
 		r = rand() % 27; //try to buy random card
@@ -62,8 +67,10 @@ int takeTurn(struct gameState *g, int pnum)
 				printf("bought card %d\n", r);
 	}
 
-	if (VERBOSE == 1)
-		printDiscard(pnum,g);	
+	//print out discards to ensure they're the same
+	printDiscard(pnum,g);	
+
+	//END TURN
 	endTurn(g);
 
 	if (VERBOSE == 1)
@@ -116,7 +123,8 @@ int main(int argc, char* argv[])
 	while (!isGameOver(g))
 //	for (j = 0; j < 3; j++)
 	{
-		printf("~~~~ROUND %d~~~~\n", j);
+		if (VERBOSE == 1)
+			printf("~~~~ROUND %d~~~~\n", j);
 		j++;
 		for (i = 0; i < numPlayers; i++)
 		{

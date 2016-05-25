@@ -1,0 +1,49 @@
+#!/bin/bash
+
+MYDIR=$1
+YOURDIR=$2
+SEED=$3
+
+echo "directory of my dominion.c file: $MYDIR"
+echo "directory of your dominion.c file: $YOURDIR"
+echo "random seed: $SEED"
+
+#put copy of testdominion.c where comparing dominion.c is
+
+echo
+echo
+echo "COMPILING MY DOMINION.C..."
+cd $MYDIR
+echo "current location: "
+pwd
+echo
+make all #make dominion.c, testdominion.c here
+./testdominion $SEED > testdominion1.out 
+#copy necessary files to other directory
+cp ./testdominion.c $YOURDIR
+cp ./tests.h $YOURDIR
+
+echo
+echo
+echo "COMPILING YOUR DOMINION.C..."
+cd $YOURDIR
+echo "current location: "
+pwd
+echo
+make all #make the dominion.c in the comparison directory
+
+#compile testdominion there so it can run
+gcc -o testdominion testdominion.c rngs.c interface.c dominion.c -g -lm 
+
+#run testdominion and output to file
+./testdominion $SEED > testdominion2.out
+
+cd $MYDIR #go home
+#pwd
+if ! cmp -s $MYDIR/testdominion1.out $YOURDIR/testdominion2.out
+then
+	echo "TEST FAILED"
+	echo "diff output to testdominiondiff.out"
+	diff $MYDIR/testdominion1.out $YOURDIR/testdominion2.out > testdominiondiff.out
+else echo "TEST SUCCEEDED"
+fi

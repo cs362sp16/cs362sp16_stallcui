@@ -271,8 +271,6 @@ int playCard(int handPos, int choice1, int choice2, int choice3, struct gameStat
 		return -1;
 	}
 
-	printf("JUST PLAYED THE CARD\n");
-	printf("# coins is %d\n", state->coins);
 
 	//reduce number of actions
 	state->numActions--;
@@ -280,8 +278,6 @@ int playCard(int handPos, int choice1, int choice2, int choice3, struct gameStat
 
 	//update coins (Treasure cards may be added with card draws)
 //	updateCoins(state->whoseTurn, state, coin_bonus);
-	printf("updateCoins\n");	
-	printf("# coins is %d\n", state->coins);
 	return 0;
 }
 
@@ -424,7 +420,7 @@ int isGameOver(struct gameState *state) {
 	}
 	if ( j >= 3)
 	{
-		printf("GAME IS OVER!\n");
+		
 		return 1;
 	}
 
@@ -1223,32 +1219,27 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 		return 0;
 		
 	case cutpurse:
-		printf("PLAYING CUTPURSE NOW\n");
 		numCoinsCutpurse = state->coins;
 		updateCoins(currentPlayer, state, 2);
 		if (numCoinsCutpurse == state->coins)
 			exit(1);
-		else printf("OK: # coins was %d, now %d\n", numCoinsCutpurse, state->coins);
 		for (i = 0; i < state->numPlayers; i++)
 		{ //for all players
 			if (i != currentPlayer)
 			{ //but not current player
 				if (state->handCount[i] == 0)
 				{
-					printf("hand %d is empty\n", i);
 					
 					//fill the hand!
 					for (x = 0; x < 5; x++)
 					{
 						drawCard(i,state);
-						printf("hand has %d in it\n", state->handCount[i]);
 					}
 				}
 				for (j = 0; j < state->handCount[i]; j++)
 				{ //reveal each card in hand
 					if (state->hand[i][j] == copper)
 					{ //if that card is a copper
-						printf("found copper at pos %d by player %d\n", j, i);
 						discardCard(j, i, state, 0);
 						break; //discard it and end the hand examination
 					}
@@ -1271,7 +1262,6 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 		discardCard(handPos, currentPlayer, state, 0);			
 
 
-		printf("post: # coins was %d, now %d\n", numCoinsCutpurse, state->coins);
 
 		return 0;
 

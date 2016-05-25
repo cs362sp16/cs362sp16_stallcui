@@ -39,6 +39,29 @@ testdominion: all buildtestdom #runs testdominion, generates testdominion.out
 	@echo "TESTING DOMINION.C" > testdominion.out
 	@./testdominion 42 >> testdominion.out
 
+testdominioncoverage:clean all
+	@./testdominion 42 
+	@./testdominion 41
+	@./testdominion 87
+	@./testdominion 40
+	@./testdominion 5
+	@./testdominion 16
+	@./testdominion 7
+	@./testdominion 8
+	@./testdominion 70
+	@./testdominion 10
+	@./testdominion 11
+	@./testdominion 12
+	@./testdominion 131
+	@./testdominion 140
+	@./testdominion 15
+	@./testdominion 16
+	@./testdominion 173
+	@./testdominion 186
+	@./testdominion 187
+	@./testdominion 214
+	@gcov dominion.c > testdominioncoverage.out
+
 #coverage commands
 #run tests, output coverage data for fine dominion.c to
 #a single file
