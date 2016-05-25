@@ -11,33 +11,28 @@ int takeTurn(struct gameState *g, int pnum)
 {
 	int r, i, j, numActionsHand;
 	numActionsHand = 0;
-	if (VERBOSE == 1)
-	{	
-		printHand(pnum,g);
-		printDeck(pnum,g);
-	}
 
 	//ACTION PHASE
 	
+	//print out hands to ensure they're the same
 	if (VERBOSE == 1)
-		printHand(pnum, g);
+		printHand(pnum,g);
 
 	for (i = 0; i < g->handCount[pnum]; i++)
 		if (g->hand[pnum][i] > 6)
 			numActionsHand++;
 
-	if (VERBOSE == 1)
-		printf("numActionsHand = %d\n", numActionsHand);
 
 	if (numActionsHand == 1)
 		for (i = 0; i < g->handCount[pnum]; i++)
 			if (g->hand[pnum][i] > 6)
+			{
+				printf("playing card %d\n", g->hand[pnum][i]);
 				playCard(i, rand() % 7, rand() % 7, rand() % 7, g);
+			}
 	j = 0;
 	if (numActionsHand > 1)
 	{
-		if (VERBOSE == 1)
-			printf("trying to play a card\n");
 		while (g->numActions > 0)
 		{
 			j++;
@@ -45,30 +40,29 @@ int takeTurn(struct gameState *g, int pnum)
 				break;
 	
 			r = rand() % g->handCount[pnum];
-			if (VERBOSE == 1)
-				printf("trying to play card %d\n", r);
+			printf("playing card at position %d\n", r);
 			playCard(r, rand() % 7, rand() % 7, rand() % 7, g);
 		}
 	}
 
-	if (VERBOSE == 1)
-		printSupply(g);
-
-	//print out hands to ensure they're the same
-	printHand(pnum, g);
 
 	//BUY SHIT
 
 	for (i = 0; i < 10; i++) //up to 10 times...
 	{
 		r = rand() % 27; //try to buy random card
-		if (-1 != buyCard(r, g))
-			if (VERBOSE == 1)
-				printf("bought card %d\n", r);
+		buyCard(r, g);
 	}
 
+	printf("bought card is %d\n", g->discard[pnum][g->discardCount[pnum]-1]);
+
 	//print out discards to ensure they're the same
-	printDiscard(pnum,g);	
+	if (VERBOSE == 1)
+		printDiscard(pnum,g);
+
+	//print out decks to ensure they're the same
+	if (VERBOSE == 1)
+		printDeck(pnum,g);
 
 	//END TURN
 	endTurn(g);
@@ -118,16 +112,22 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
+	//print the supply of the game
+	printSupply(g);
+
+
 	j=0;
 	//while game isn't over, take turns
 	while (!isGameOver(g))
 //	for (j = 0; j < 3; j++)
 	{
-		if (VERBOSE == 1)
-			printf("~~~~ROUND %d~~~~\n", j);
 		j++;
 		for (i = 0; i < numPlayers; i++)
 		{
+			if (VERBOSE == 1)
+				printf("~~Turn %d | Player %d~~\n", j, i);
+			else
+				printf("turn %d player %d\n", j, i);
 			r = takeTurn(g, i);	
 		}
 	}

@@ -1,0 +1,40 @@
+I chose to compare with Aileen Thai's repository, located
+at https://github.com/cs362sp16/cs362sp16_thaia.git. With the
+seed 42, the testing failed; in particular, the diff of the
+two files (found as diff.out) is over 5000 lines long.
+In testdominion.c, I printed the hands and discards of each
+of the players each turn they had, contrbuting to the long
+diff.
+
+diffdominion also produces a diff in columns view, called
+diffcolumns.out. This file is slightly more helpful as it
+allows for easy viewing of the diff. The source of these
+differences seems to be in the buys; for example, on turn
+12, player 0 buys silver in one iteration and buys nothing
+in the oher. This may be due to a failure in buyCard in 
+Aileen's dominion.c. Resulting errors may be a propagation
+of this singular error or instances of the same bug 
+ocurring again. I believe that I am correct, since my code
+buys and plays correctly while the other code fails to buy
+and play when my code does so, instead of buying and
+playing differently. I discussed this with the author of the
+code, and they agree that my changes to dominion.c are more
+extensive.
+
+This is not an ideal case for differential testing for several
+reasons; firstly, this code is extremely long which makes any
+sort of differential testing extremely difficult to decipher.
+Additionally, this code is very complex, and a single error
+can propagate to a huge magnitude as the program continues running.
+For these reasions, differential testing seems to be less
+effective than other types of testing.
+
+The coverage for Aileen's code was better than for mine;
+her code acheived 51.33% coverage and mine only 46.10%. I
+think this is because I added more lines, many of which are
+conditional failsafes, which are not activated unless
+soemthing goes horribly wrong in the code.
+
+Running the command "make testdominioncoverage" runs
+testdominion with 20 different seeds, and achieves test
+coverage of 79.38%.

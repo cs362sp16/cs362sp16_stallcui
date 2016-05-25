@@ -33,7 +33,7 @@ echo
 make all #make the dominion.c in the comparison directory
 
 #compile testdominion there so it can run
-gcc -o testdominion testdominion.c rngs.c interface.c dominion.c -g -lm 
+gcc -o testdominion testdominion.c rngs.c interface.c dominion.c -coverage -fpic -g -lm 
 
 #run testdominion and output to file
 ./testdominion $SEED > testdominion2.out
@@ -44,6 +44,7 @@ if ! cmp -s $MYDIR/testdominion1.out $YOURDIR/testdominion2.out
 then
 	echo "TEST FAILED"
 	echo "diff output to testdominiondiff.out"
-	diff $MYDIR/testdominion1.out $YOURDIR/testdominion2.out > testdominiondiff.out
+	diff $MYDIR/testdominion1.out $YOURDIR/testdominion2.out > diff.out
+	diff -y $MYDIR/testdominion1.out $YOURDIR/testdominion2.out > diffcolumns.out
 else echo "TEST SUCCEEDED"
 fi
