@@ -1,7 +1,9 @@
 #dominion makefile
 #Isaac Stallcup
 
-CFLAGS = -Wall -fpic -coverage -lm
+CFLAGS = -g -Wall -fpic -coverage -lm
+
+T = cd thaia; 
 
 #help
 
@@ -15,15 +17,29 @@ help:
 	@echo "lograndom/logunit - run each individual unit/random test, log them"
 	@echo "covrand/covunit - outputs only coverage data for dominion.c to stdout"
 	@echo "test - run all available tests"
+	@echo "thaia - run unit, card and random tests on Aileen Thai (ONID thaia)'s implementation of dominion.c"
 
 #makefile commands
 
+buildthaia: # "$T" changes directory to the thaia directory
+	@$T make rngs.o; make dominion.o
+	@$T gcc stallcuicardtest1.c dominion.o rngs.o $(CFLAGS) -o st-card1 
+	@$T gcc stallcuicardtest2.c dominion.o rngs.o $(CFLAGS) -o st-card2
+	@$T gcc stallcuicardtest3.c dominion.o rngs.o $(CFLAGS) -o st-card3
+	@$T gcc stallcuicardtest4.c dominion.o rngs.o $(CFLAGS) -o st-card4
+	@$T gcc stallcuiunittest1.c dominion.o rngs.o $(CFLAGS) -o st-unit1 
+	@$T gcc stallcuiunittest2.c dominion.o rngs.o $(CFLAGS) -o st-unit2
+	@$T gcc stallcuiunittest3.c dominion.o rngs.o $(CFLAGS) -o st-unit3
+	@$T gcc stallcuiunittest4.c dominion.o rngs.o $(CFLAGS) -o st-unit4
+
 test: all suiterandom suiteunit coverage
 
-all: playdom player buildunit buildrandom buildtestdom
+all: playdom player buildunit buildrandom buildtestdom buildthaia
 
 clean:
+	@echo "MAKE: CLEANING DIRECTORY"; pwd
 	rm -f *.o *.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM cardtest1 cardtest2 cardtest3 cardtest4 log playdom player randomtestadventurer randomtestcard1 randomtestcard2 unittest1 unittest2 unittest3 unittest4 *.out 
+	@$T make clean #clean up thaia directory
 
 tidy: #leaves .out files alone
 	rm -f *.o *.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM cardtest1 cardtest2 cardtest3 cardtest4 log playdom player randomtestadventurer randomtestcard1 randomtestcard2 unittest1 unittest2 unittest3 unittest4
@@ -33,7 +49,7 @@ buildunit: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3
 buildrandom: randomtestcard1 randomtestcard2 randomtestadventurer
 
 buildtestdom: dominion.o rngs.o interface.o testdominion.c
-	gcc -o testdominion testdominion.c -g dominion.o interface.o rngs.o $(CFLAGS)
+	@gcc -o testdominion testdominion.c  dominion.o interface.o rngs.o $(CFLAGS)
 
 testdominion: all buildtestdom #runs testdominion, generates testdominion.out
 	@echo "TESTING DOMINION.C" > testdominion.out
@@ -233,57 +249,57 @@ suiterandom:
 #.o files
 
 rngs.o: rngs.h rngs.c
-	gcc -c rngs.c -g  $(CFLAGS)
+	gcc -c rngs.c $(CFLAGS)
 
 dominion.o: dominion.h dominion.c rngs.o
-	gcc -c dominion.c -g  $(CFLAGS)
+	gcc -c dominion.c  $(CFLAGS)
 
 interface.o: interface.h interface.c
-	gcc -c interface.c -g  $(CFLAGS)
+	gcc -c interface.c  $(CFLAGS)
 
 #runnable files
 
 playdom: dominion.o playdom.c
-	gcc -o playdom playdom.c -g dominion.o rngs.o $(CFLAGS)
+	gcc -o playdom playdom.c dominion.o rngs.o $(CFLAGS)
 
 player: player.c interface.o
-	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
+	gcc -o player player.c dominion.o rngs.o interface.o $(CFLAGS)
 
 #random tests
 
 randomtestcard1: randomtestcard1.c dominion.o rngs.o interface.o
-	@gcc -o randomtestcard1 randomtestcard1.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	@gcc -o randomtestcard1 randomtestcard1.c dominion.o rngs.o interface.o $(CFLAGS)
 
 randomtestcard2: randomtestcard2.c dominion.o rngs.o interface.o
-	@gcc -o randomtestcard2 randomtestcard2.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	@gcc -o randomtestcard2 randomtestcard2.c dominion.o rngs.o interface.o $(CFLAGS)
 	
 randomtestadventurer: randomtestadventurer.c dominion.o rngs.o interface.o
-	@gcc -o randomtestadventurer randomtestadventurer.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	@gcc -o randomtestadventurer randomtestadventurer.c dominion.o rngs.o interface.o $(CFLAGS)
 
 #unit tests
 
 unittest1: unittest1.c dominion.o rngs.o interface.o
-	@gcc -o unittest1 unittest1.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	@gcc -o unittest1 unittest1.c dominion.o rngs.o interface.o $(CFLAGS)
 
 unittest2: unittest2.c dominion.o rngs.o interface.o
-	@gcc -o unittest2 unittest2.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	@gcc -o unittest2 unittest2.c dominion.o rngs.o interface.o $(CFLAGS)
 
 unittest3: unittest3.c dominion.o rngs.o interface.o
-	@gcc -o unittest3 unittest3.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	@gcc -o unittest3 unittest3.c dominion.o rngs.o interface.o $(CFLAGS)
 
 unittest4: unittest4.c dominion.o rngs.o interface.o
-	@gcc -o unittest4 unittest4.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	@gcc -o unittest4 unittest4.c dominion.o rngs.o interface.o $(CFLAGS)
 
 #card tests
 
 cardtest1: cardtest1.c dominion.o rngs.o interface.o
-	@gcc -o cardtest1 cardtest1.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	@gcc -o cardtest1 cardtest1.c dominion.o rngs.o interface.o $(CFLAGS)
 
 cardtest2: cardtest2.c dominion.o rngs.o interface.o
-	@gcc -o cardtest2 cardtest2.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	@gcc -o cardtest2 cardtest2.c dominion.o rngs.o interface.o $(CFLAGS)
 
 cardtest3: cardtest3.c dominion.o rngs.o interface.o
-	@gcc -o cardtest3 cardtest3.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	@gcc -o cardtest3 cardtest3.c dominion.o rngs.o interface.o $(CFLAGS)
 
 cardtest4: cardtest4.c dominion.o rngs.o interface.o
-	@gcc -o cardtest4 cardtest4.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	@gcc -o cardtest4 cardtest4.c dominion.o rngs.o interface.o $(CFLAGS)

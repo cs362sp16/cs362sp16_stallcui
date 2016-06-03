@@ -1,0 +1,10 @@
+There seems to be bugs in play_steward.
+
+One of them makes sense - it was a bug I added in which one of the discardCard
+functions was commented out, so cards aren't trashed correctly.
+
+However, it doesn't seem like coins are being added correctly when the user
+selects choice1 == 2. I'm uncertain if this is because my assert is checking
+for the wrong thing.
+
+There also might be a bug in the cut_purse card.

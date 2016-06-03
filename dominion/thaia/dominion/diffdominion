@@ -1,0 +1,34 @@
+#!/bin/bash
+
+first=$1
+second=$2
+seed=$3
+
+echo "directory of 1st dominion.c file: $first"
+echo "directory of 2nd dominion.c file: $second"
+echo "random seed: $seed"
+echo
+
+first=`pwd`
+echo $first
+make all
+gcc -o testdominion testdominion.c dominion.c interface.c rngs.c -g -fpic -coverage -lm
+./testdominion $seed > testdominion_first.out
+cp ./testdominion.c $second # Move testdominion.c to second location
+
+cd $second
+make all
+gcc -o testdominion testdominion.c dominion.c interface.c rngs.c -g -fpic -coverage -lm
+./testdominion $seed > testdominion_second.out
+
+cd $first
+# Compare files to see if they differ, redirect ouput to /dev/null
+cmp -s testdominion_first.out $second/testdominion_second.out >/dev/null
+if [ $? -eq 1 ];
+then
+  echo "TEST FAILED"  # Differences found
+  echo "Outputing diff to testdominiondiff.out"
+  diff testdominion_first.out $second/testdominion_second.out > testdominiondiff.out 
+else
+  echo "TEST PASSED"  # Same
+fi  

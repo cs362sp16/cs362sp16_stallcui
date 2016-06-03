@@ -1,0 +1,19 @@
+The percentage of code coverage for the first unit test was largest. It tapered
+off significantly afterwards.
+
+Reasons why this may be so:
+* The first unit test covered the initializeGame function, which was pretty
+  big, while the others tested were much smaller
+* My tests were not as thorough after the first one (which is true for some...)
+
+After running through the game (via running playdom), I got around 50%
+coverage on the dominion code. To be honest, this value doesn't seem accurate.
+I feel like I may have missed some things in my tests, but we'll see.
+
+As for unit testing itself, I found it a bit strange to do in C. I found myself
+writing tests for the wrong things, but after falling into a groove, it came
+along much easier, as with all things.
+
+The card tests were simpler to test than the game functions, because they
+could be written in a sort of format. Whereas the game functions varied quite a
+bit (in what you should test for). 

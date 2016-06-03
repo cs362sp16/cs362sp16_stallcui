@@ -1,0 +1,31 @@
+Cards refactored out of the hellishly long switch statement:
+* council_room
+* remodel
+* minion 
+* steward
+* cutpurse
+
+The following functions start on line 646:
+* int play_council_room(struct gameState *state, int handPos);
+* int play_remodel(int choice1, int choice2, struct gameState *state,
+                   int handPos);
+* int play_minion(int choice1, int choice2, struct gameState *state,
+                  int handPos);
+* int play_steward(int choice1, int choice2, int choice3,
+                   struct gameState *state, int handPos);
+* int cutpurse(struct gameState *state, int handPos);
+
+Refactoring/extraction process:
+  Picked 5 cards depending on their case length and complexity.
+
+  Afterwards, all I did was create the appropriate function (placed above
+  cardEffect) and yanked the relevant code from its place in the switch
+  statement. After commenting out that card's case in the switch statement, I
+  pasted the [card's] code into its corresponding function and 
+  reformatted the spacing. The function parameters were identified and placed
+  accordingly; same with variables that needed to be declared.
+
+  After refactoring each function, the code was recompiled and run through
+  with ``./playdom (num) (num)`` to check that it wouldn't seg fault. Once
+  everything checked out, the duplicate code left in the switch statement was
+  removed.

@@ -1,0 +1,22 @@
+The games ended up being very different, so it's hard to say whose
+implementation of dominion was correct.
+
+The tester isn't perfect in how it randomizes a lot of the moves so sometimes
+it stalls... which is unfortunate. I also accidentally overwrote my dominion.c
+at one point (git reverted though!)...
+
+Alongside that, the way that the info is displayed is hard to parse through.
+So even if things were ideal, mistakes can still be made because the diff
+output is difficult to interpret/understand.
+
+Note: For testdominion_second.out, the gcov results are ~69%. I actually ran
+the tester twice to get that amount of coverage. However, I forget to append
+the first gcov results to the end of the file. On the first run-through, there
+should also be:
+
+  File 'dominion.c'
+  Lines executed:55.73% of 558
+  Creating 'dominion.c.gcov'
+
+Edit: .out files were recently updated, so the above comment doesn't apply
+anymore (but I'll leave in case you want to grade a previous commit). 

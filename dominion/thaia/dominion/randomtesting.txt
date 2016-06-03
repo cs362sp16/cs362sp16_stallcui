@@ -1,0 +1,27 @@
+-- Assignment 3 - Random Testing Write-Up --
+
+For ``adventurer``, I managed to cover 100% of the card's code (providing that
+the random number generation for deckCount caused a reshuffling of the deck).
+
+Since  ``adventurer`` was the first card I started with, I used it as a
+template to write the random tests for the other cards I chose. However,
+I couldn't get as high coverage for ``cutpurse`` and ``baron``. 
+
+For ``cutpurse``, copper was never discarded from the (other player's) hand.
+Strangely enough, when copper wasn't present, the targeted player never had to
+reveal their card number either... 
+
+For ``smithy``, 100% (card code) coverage was also achieved.
+
+As for ``baron``, I didn't know how to manipulate the supplyCount to trigger,
+so the sections of code that relied on the supplyCount of ``estate`` changing
+was never triggered. It's something I'll need to look into later.
+
+Random tests provided more code coverage. However, I think unit test results
+are easier to interpret regarding fault detection. Because smaller sections of
+code is being tested per each unit test, it's easier to isolate/determine the
+failing parts.
+
+
+*Note: I have an extra random test, because I initially forgot that we had to
+random test a card that had unit tests. So have an extra card.
