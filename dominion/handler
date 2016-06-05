@@ -1,0 +1,51 @@
+#!/bin/bash
+
+#script to prep and run tarantula algorithm for
+#chosen cards (+adventurer)
+
+SEED=$1
+echo "seed = $SEED"
+
+./randomtestcard1 $SEED > randomdump1.out
+./randomtestcard2 $SEED > randomdump2.out
+./randomtestadventurer $SEED > randomdumpadv.out
+
+SIZE1=$(grep "tests" randomdump1.out | cut -c1-3)
+SIZE2=$(grep "tests" randomdump2.out | cut -c1-3)
+SIZEA=$(grep "tests" randomdumpadv.out | cut -c1-3)
+
+FAIL1=$(grep "FAILURE" randomdump1.out -c)
+FAIL2=$(grep "FAILURE" randomdump2.out -c)
+FAILA=$(grep "FAILURE" randomdumpadv.out -c)
+
+PASS1=$(($SIZE1-$FAIL1))
+PASS2=$(($SIZE2-$FAIL2))
+PASSA=$(($SIZEA-$FAILA))
+
+SUMFAIL=$(($FAIL1+$FAIL2+$FAILA))
+SUMPASS=$(($PASS1+$PASS2+$PASSA))
+
+TOTAL=$(($SUMFAIL+$SUMPASS))
+
+echo "# tests run for card 1: $SIZE1"
+echo "# failures detected card 1: $FAIL1"
+echo "# successes for card 1: $PASS1"
+
+echo "# tests run for card 2: $SIZE2"
+echo "# failures detected card 2: $FAIL2"
+echo "# successes for card 2: $PASS2"
+
+echo "# tests run for adventurer: $SIZEA"
+echo "# failures detected adventurer: $FAILA"
+echo "# successes for adventurer: $PASSA"
+
+echo "# total tests failed: $SUMFAIL"
+echo "# total tests passed: $SUMPASS"
+echo "# TOTAL TESTS: $TOTAL"
+
+echo "card 1:"
+./tarantula $FAIL1 $SUMFAIL $PASS1 $SUMPASS
+echo "card 2:"
+./tarantula $FAIL2 $SUMFAIL $PASS2 $SUMPASS
+echo "card adventurer:"
+./tarantula $FAILA $SUMFAIL $PASSA $SUMPASS

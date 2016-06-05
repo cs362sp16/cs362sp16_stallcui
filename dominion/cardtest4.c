@@ -9,11 +9,10 @@ int main()
 	printf("CARD TEST FOUR -- RUNNING\n");
 
 	struct gameState g;
-	int r, prevcoins;
+	int r;
 	int k[10] = {village, smithy, salvager, cutpurse, council_room, sea_hag, treasure_map, ambassador, tribute, minion};
 
 	initializeGame(2, k, 5, &g);
-	prevcoins = g.coins;
 
 	//give player a cutpurse
 	gainCard(cutpurse, &g, 2, 0);

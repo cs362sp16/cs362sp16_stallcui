@@ -3,6 +3,8 @@
 
 CFLAGS = -g -Wall -fpic -coverage -lm
 
+U = cd cardtest;
+
 T = cd thaia; 
 
 #help
@@ -38,7 +40,7 @@ all: playdom player buildunit buildrandom buildtestdom buildthaia
 
 clean:
 	@echo "MAKE: CLEANING DIRECTORY"; pwd
-	rm -f *.o *.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM cardtest1 cardtest2 cardtest3 cardtest4 log playdom player randomtestadventurer randomtestcard1 randomtestcard2 unittest1 unittest2 unittest3 unittest4 *.out 
+	rm -f *.o *.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM cardtest1 cardtest2 cardtest3 cardtest4 log playdom player randomtestadventurer randomtestcard1 randomtestcard2 unittest1 unittest2 unittest3 unittest4 dominion testdominion *.out 
 	@$T make clean #clean up thaia directory
 
 tidy: #leaves .out files alone

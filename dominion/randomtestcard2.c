@@ -96,6 +96,7 @@ int casegen(int k[10])
 
 int main(int argc, char* argv[])
 {
+	printf("test\n");
 	int i, j;
 	int seed = atoi(argv[1]);	
 	int k[10] = {adventurer, baron, gardens, embargo, village, minion, mine, cutpurse, sea_hag, smithy};

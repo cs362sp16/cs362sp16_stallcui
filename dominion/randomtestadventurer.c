@@ -109,7 +109,9 @@ int main(int argc, char* argv[])
 	int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
 	seedchkargs(argc, seed); //note: does not accept 0 for random # seed
 	srand(seed);
-	for (i = 0; i < rand() % 100; i++)
+	int numTests = rand() % 1000;
+	printf("%d tests run\n",numTests);
+	for (i = 0; i < rand() % 1000; i++)
 		casegen(k);
 	return 0;
 }

@@ -1,0 +1,62 @@
+FINDING THE BUG
+
+I looked at the results of the card tests and found that
+my unit tests for cutpurse and found that cutpurse was 
+failing in two ways:
+
+	1. Not giving active player 2 coins
+	2. Not forcing other player to discard a copper
+
+In order to fix this bug, I looked at the part of the
+switch statement in dominion.c that involved the 
+cutpurse card. I first examined the updateCoins
+function, which reset the coins count then totalled
+up the coins in the current player's hand plus
+a bonus fed into the function. 
+
+The bonus fed into updateCoins was 2, meaning 
+that after this call to updateCoins, the # of 
+coins should be correct. In order to check this,
+ I set up a variable before the call to updateCoins 
+to hold the # of coins that the current player 
+has before the cutpurse is played, then asserted 
+after the call that the # of coins was two larger. 
+I also printed the values of the placeholder 
+variable and the actual # of coins if
+they were different, and found that updateCoins
+worked as intended.
+
+I then decided to see what the # of coins was at
+the end of the switch statement's section for
+cutpurse, so I added in a print statement there
+too. This confirmed that the # of coins was indeed
+two more at the end of the switch statement, meaning
+the problem most likely did not lie with the switch
+statement itself.
+
+I added some print debugging in playCard after the
+call to cardEffect to check there next. This again confirmed
+the # of coins was 6 as desired. I then added a print
+statement in playCard after playCard called
+updateCoins, and saw that this call to updateCoins
+was not preserving the changes caused by the cardEffect
+function. Bug found! Commenting out the call to
+updateCoins fixed the problem.
+
+One question I had at this point was whether or not
+commenting out this line of code messed anything up. 
+So, I ran all my tests again, as well as tried to play
+a game of dominion. The call to playDom worked
+fine. The test for minion now passed as well, however
+the random test for baron fared with worse success.
+It however was already broken, leading me to think I'd fixed 
+this portion of this bug.
+
+However, the cutpurse card was stll refusing to force 
+player 1 to  discard their copper. This is because player 1
+doesn't have a hand on the first turn of the game; its size
+is 0. I added a conditional to, if they're out of cards,
+draw their hand up to size, and the test passed.
+
+I believe I am done debugging this bug because the behavior that
+caused me to select it as the but to work on has ceased.   
