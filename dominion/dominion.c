@@ -271,9 +271,14 @@ int playCard(int handPos, int choice1, int choice2, int choice3, struct gameStat
 		return -1;
 	}
 
+	if (card == cutpurse)
+	{
+		printf("coins in playCard after = %d\n", state->coins);
+	}
 
 	//reduce number of actions
 	state->numActions--;
+
 
 
 	//update coins (Treasure cards may be added with card draws)
@@ -1240,9 +1245,13 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 		
 	case cutpurse:
 		numCoinsCutpurse = state->coins;
+		printf("# coins before = %d\n", numCoinsCutpurse);
 		updateCoins(currentPlayer, state, 2);
 		if (numCoinsCutpurse == state->coins)
-			exit(1);
+		{
+			printf("%d %d\n", numCoinsCutpurse, state->coins);
+			exit(1); //exit if # coins has failed
+		}
 		for (i = 0; i < state->numPlayers; i++)
 		{ //for all players
 			if (i != currentPlayer)
@@ -1281,7 +1290,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 			//discard played card from hand
 		discardCard(handPos, currentPlayer, state, 0);			
 
-
+		printf("coins now are %d\n", state->coins);
 
 		return 0;
 

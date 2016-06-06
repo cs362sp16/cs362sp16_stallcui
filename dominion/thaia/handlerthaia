@@ -15,12 +15,11 @@ FILE3=$4
 #FILE2=$FILE2
 #FILE3=$FILE3
 
-./randomtestadventurer $SEED > $FILE3
 
 
 make -s tidy
 make -s all
-./randomtestcard1 $SEED > $FILE1
+./st-rand1 $SEED > $FILE1
 echo
 gcov dominion.c
 
@@ -36,16 +35,16 @@ echo "# successes for card 1: $PASS1"
 echo "checking # cards in hand..."
 t1s1=$(grep "FAILED ASSERTION: # cards in hand has changed" $FILE1 -c)
 echo "# tests failing card to hand $t1s1"
-./tarantula $t1s1 $FAIL1 $PASS1 680
+./tarantula $t1s1 $FAIL1 $PASS1 877
 
 echo "checking # cards in deck..."
 t1s2=$(grep "FAILED ASSERTION: # cards in deck has changed" $FILE1 -c)
 echo "# tests failing changed deck $t1s2"
-./tarantula $t1s1 $FAIL1 $PASS1 680
+./tarantula $t1s1 $FAIL1 $PASS1 877
 
 make -s tidy
 make -s all
-./randomtestcard2 $SEED > $FILE2
+./st-rand2 $SEED > $FILE2
 echo
 gcov dominion.c
 
@@ -61,31 +60,31 @@ echo "# successes for card 2:      $PASS2"
 echo "checking # cards in hand..."
 t2s1=$(grep "FAILED ASSERTION: # cards in hand has changed" $FILE2 -c)
 echo "# tests failing card to hand $t2s1"
-./tarantula $t2s1 $FAIL2 $PASS2 983
+./tarantula $t2s1 $FAIL2 $PASS2 903
 
 echo "checking # buys increase..."
 t2s2=$(grep "FAILED ASSERTION: # buys is same" $FILE2 -c)
 echo "# tests failing # buys is    $t2s2"
-./tarantula $t2s2 $FAIL2 $PASS2 965
+./tarantula $t2s2 $FAIL2 $PASS2 896
 
 echo "checking discarded estate..."
 t2s3=$(grep "FAILED ASSERTION: discarded cards has changed" $FILE2 -c)
 echo "# tests failing discard      $t2s3"
-./tarantula $t2s3 $FAIL2 $PASS2 996
+./tarantula $t2s3 $FAIL2 $PASS2 904
 
 echo "checking coins..."
 t2s4=$(grep "FAILED ASSERTION: number of coins changed" $FILE2 -c)
 echo "# tests failing numer coins  $t2s4"
-./tarantula $t2s4 $FAIL2 $PASS2 978
+./tarantula $t2s4 $FAIL2 $PASS2 902
 
 echo "checking estate -> hand..."
 t2s5=$(grep "FAILED ASSERTION: estate added to discard" $FILE2 -c)
 echo "# tests failing gain estate  $t2s5"
-./tarantula $t2s5 $FAIL2 $PASS2 1019
+./tarantula $t2s5 $FAIL2 $PASS2 918
 
 make -s tidy
 make -s all
-./randomtestadventurer $SEED > $FILE3
+./st-randa $SEED > $FILE3
 echo
 gcov dominion.c
 
@@ -101,19 +100,19 @@ echo "# successes for adventurer: $PASS3"
 echo "checking # cards in hand..."
 t3s1=$(grep "FAILED ASSERTION: # cards in hand has changed" $FILE3 -c)
 echo "# tests failing card to hand $t3s1"
-./tarantula $t3s1 $FAIL3 $PASS3 774
+./tarantula $t3s1 $FAIL3 $PASS3 764
 
 echo "checking # cards in deck..."
 t3s2=$(grep "FAILED ASSERTION: # cards in deck has changed" $FILE3 -c)
 echo "# tests failing deck changed $t3s2"
-./tarantula $t3s2 $FAIL3 $PASS3 771
+./tarantula $t3s2 $FAIL3 $PASS3 761
 
 echo "checking # coins in hand..."
 t3s3=$(grep "FAILED ASSERTION: # coins in hand has changed" $FILE3 -c)
 echo "# tests failing coin in hand $t3s3"
-./tarantula $t3s3 $FAIL3 $PASS3 772
+./tarantula $t3s3 $FAIL3 $PASS3 762
 
 echo "checking # coins in dscd..."
 t3s4=$(grep "FAILED ASSERTION: # dscd in hand has changed" $FILE3 -c)
 echo "# tests failing change dscd  $t3s4"
-./tarantula $t3s4 $FAIL3 $PASS3 784
+./tarantula $t3s4 $FAIL3 $PASS3 772

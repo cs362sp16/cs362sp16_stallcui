@@ -1,0 +1,22 @@
+#!/bin/bash
+
+make -s all
+
+cd thaia
+
+./st-card1 > card1.out
+echo "card test 1 failures:"
+grep "FAILED ASSERTION" card1.out
+./st-card2 > card2.out
+echo "card test 2 failures:"
+grep "FAILED ASSERTION" card2.out
+./st-card3 > card3.out
+echo "card test 3 failures:"
+grep "FAILED ASSERTION" card3.out
+./st-card4 > card4.out
+echo "card test 4 failures:"
+grep "FAILED ASSERTION" card4.out
+
+./handlerthaia 3 randomdump1.out randomdump2.out randomdumpadv.out > thaiatarantula
+
+grep "~|end failing test case|~" thaiatarantula -B 5

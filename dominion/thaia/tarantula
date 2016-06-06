@@ -1,0 +1,27 @@
+#!/bin/bash
+
+FAIL=$1
+TOTF=$2
+TOTP=$3
+LINE=$4
+
+if [ $FAIL -gt 0 ]
+then
+	echo "~!non-failing test case!~"
+	TOT=$(grep "$LINE" dominion.c.gcov | cut -c7-9)
+	if [ $TOT = "###" ]
+	then
+		TOT=0
+	fi
+	echo "      line run $TOT times"
+	if [ $TOT = "0" ]
+	then
+		PASS=0
+	else
+		PASS=$(($TOT - $FAIL))
+	fi
+	echo "      line passed $PASS times"
+	./tarantulamath $FAIL $TOTF $PASS $TOTP
+	echo "~|end failing test case|~"
+fi
+	

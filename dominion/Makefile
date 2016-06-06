@@ -19,15 +19,22 @@ help:
 	@echo "lograndom/logunit - run each individual unit/random test, log them"
 	@echo "covrand/covunit - outputs only coverage data for dominion.c to stdout"
 	@echo "test - run all available tests"
-	@echo "thaia - run unit, card and random tests on Aileen Thai (ONID thaia)'s implementation of dominion.c"
+	@echo "spider - run tarantula script 'handler'"
 
 #makefile commands
 
+#runs tarantula for final
 spider: all
-	./handler 3
+	./handler 3 randomdump1.out randomdump2.out randomdump3.out
+
+testthaia: buildthaia
+	./thaia/st-card1 > ./thaia/card1.out
+	./thaia/st-card2 > ./thaia/card2.out
+	./thaia/st-card3 > ./thaia/card3.out
+	./thaia/st-card4 > ./thaia/card4.out
 
 buildthaia: # "$T" changes directory to the thaia directory
-	@$T make rngs.o; make dominion.o
+	@$T make rngs.o; make dominion.o; make interface.o
 	@$T gcc stallcuicardtest1.c dominion.o rngs.o $(CFLAGS) -o st-card1 
 	@$T gcc stallcuicardtest2.c dominion.o rngs.o $(CFLAGS) -o st-card2
 	@$T gcc stallcuicardtest3.c dominion.o rngs.o $(CFLAGS) -o st-card3
@@ -36,6 +43,9 @@ buildthaia: # "$T" changes directory to the thaia directory
 	@$T gcc stallcuiunittest2.c dominion.o rngs.o $(CFLAGS) -o st-unit2
 	@$T gcc stallcuiunittest3.c dominion.o rngs.o $(CFLAGS) -o st-unit3
 	@$T gcc stallcuiunittest4.c dominion.o rngs.o $(CFLAGS) -o st-unit4
+	@$T gcc stallcuirand1.c dominion.o rngs.o $(CFLAGS) -o st-rand1
+	@$T gcc stallcuirand2.c dominion.o rngs.o interface.o $(CFLAGS) -o st-rand2
+	@$T gcc stallcuiranda.c dominion.o rngs.o interface.o $(CFLAGS) -o st-randa
 
 test: all suiterandom suiteunit coverage
 

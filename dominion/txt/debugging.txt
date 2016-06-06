@@ -60,3 +60,17 @@ draw their hand up to size, and the test passed.
 
 I believe I am done debugging this bug because the behavior that
 caused me to select it as the but to work on has ceased.   
+
+Of Agans' rules, the most applicable in this situation was
+"Quit Thinking And Look". I used print statements to examine
+my code at all levels detailed above before I tried to fix 
+the bug in order to be sure I was going to fix it correctly.
+
+I also changed only one thing at a time (rule 5) for reasons
+he details, namely that each time I tried a fix I was sure
+that if it failed, it was because that specific fix was 
+ineffective.
+
+I also used these print statements to keep an audit trail
+(#6) so if I decided to return to this bug, I would be able
+to reason out my changes.
