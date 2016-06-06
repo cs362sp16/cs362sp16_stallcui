@@ -1,51 +1,114 @@
 #!/bin/bash
 
-#script to prep and run tarantula algorithm for
+#script to prep and run tarantulamath algorithm for
 #chosen cards (+adventurer)
 
 SEED=$1
 echo "seed = $SEED"
 
-./randomtestcard1 $SEED > randomdump1.out
-./randomtestcard2 $SEED > randomdump2.out
-./randomtestadventurer $SEED > randomdumpadv.out
+FILE1=randomdump1.out
+FILE2=randomdump2.out
+FILE3=randomdumpadv.out
+
+./randomtestadventurer $SEED > $FILE3
+
+
+make -s tidy
+make -s all
+./randomtestcard1 $SEED > $FILE1
+echo
+gcov dominion.c
 
 SIZE1=$(grep "tests" randomdump1.out | cut -c1-3)
-SIZE2=$(grep "tests" randomdump2.out | cut -c1-3)
-SIZEA=$(grep "tests" randomdumpadv.out | cut -c1-3)
-
 FAIL1=$(grep "FAILURE" randomdump1.out -c)
-FAIL2=$(grep "FAILURE" randomdump2.out -c)
-FAILA=$(grep "FAILURE" randomdumpadv.out -c)
-
 PASS1=$(($SIZE1-$FAIL1))
-PASS2=$(($SIZE2-$FAIL2))
-PASSA=$(($SIZEA-$FAILA))
 
-SUMFAIL=$(($FAIL1+$FAIL2+$FAILA))
-SUMPASS=$(($PASS1+$PASS2+$PASSA))
-
-TOTAL=$(($SUMFAIL+$SUMPASS))
-
+echo "~~~~~~~~~~~TEST 1~~~~~~~~~~~"
 echo "# tests run for card 1: $SIZE1"
 echo "# failures detected card 1: $FAIL1"
 echo "# successes for card 1: $PASS1"
 
-echo "# tests run for card 2: $SIZE2"
-echo "# failures detected card 2: $FAIL2"
-echo "# successes for card 2: $PASS2"
+echo "checking # cards in hand..."
+t1s1=$(grep "FAILED ASSERTION: # cards in hand has changed" $FILE1 -c)
+echo "# tests failing card to hand $t1s1"
+./tarantula $t1s1 $FAIL1 $PASS1 680
 
-echo "# tests run for adventurer: $SIZEA"
-echo "# failures detected adventurer: $FAILA"
-echo "# successes for adventurer: $PASSA"
+echo "checking # cards in deck..."
+t1s2=$(grep "FAILED ASSERTION: # cards in deck has changed" $FILE1 -c)
+echo "# tests failing changed deck $t1s2"
+./tarantula $t1s1 $FAIL1 $PASS1 680
 
-echo "# total tests failed: $SUMFAIL"
-echo "# total tests passed: $SUMPASS"
-echo "# TOTAL TESTS: $TOTAL"
+make -s tidy
+make -s all
+./randomtestcard2 $SEED > $FILE2
+echo
+gcov dominion.c
 
-echo "card 1:"
-./tarantula $FAIL1 $SUMFAIL $PASS1 $SUMPASS
-echo "card 2:"
-./tarantula $FAIL2 $SUMFAIL $PASS2 $SUMPASS
-echo "card adventurer:"
-./tarantula $FAILA $SUMFAIL $PASSA $SUMPASS
+SIZE2=$(grep "tests" randomdump2.out | cut -c1-3)
+FAIL2=$(grep "FAILURE" randomdump2.out -c)
+PASS2=$(($SIZE2-$FAIL2))
+
+echo "~~~~~~~~~~~TEST 2~~~~~~~~~~~"
+echo "# tests run for card 2:      $SIZE2"
+echo "# failures detected card 2:  $FAIL2"
+echo "# successes for card 2:      $PASS2"
+#test 2 statement 1
+echo "checking # cards in hand..."
+t2s1=$(grep "FAILED ASSERTION: # cards in hand has changed" $FILE2 -c)
+echo "# tests failing card to hand $t2s1"
+./tarantula $t2s1 $FAIL2 $PASS2 983
+
+echo "checking # buys increase..."
+t2s2=$(grep "FAILED ASSERTION: # buys is same" $FILE2 -c)
+echo "# tests failing # buys is    $t2s2"
+./tarantula $t2s2 $FAIL2 $PASS2 965
+
+echo "checking discarded estate..."
+t2s3=$(grep "FAILED ASSERTION: discarded cards has changed" $FILE2 -c)
+echo "# tests failing discard      $t2s3"
+./tarantula $t2s3 $FAIL2 $PASS2 996
+
+echo "checking coins..."
+t2s4=$(grep "FAILED ASSERTION: number of coins changed" $FILE2 -c)
+echo "# tests failing numer coins  $t2s4"
+./tarantula $t2s4 $FAIL2 $PASS2 978
+
+echo "checking estate -> hand..."
+t2s5=$(grep "FAILED ASSERTION: estate added to discard" $FILE2 -c)
+echo "# tests failing gain estate  $t2s5"
+./tarantula $t2s5 $FAIL2 $PASS2 1019
+
+make -s tidy
+make -s all
+./randomtestadventurer $SEED > $FILE3
+echo
+gcov dominion.c
+
+SIZE3=$(grep "tests" randomdumpadv.out | cut -c1-3)
+FAIL3=$(grep "FAILURE" randomdumpadv.out -c)
+PASS3=$(($SIZE3-$FAIL3))
+
+echo "~~~~~~~~~~~TEST 3~~~~~~~~~~~"
+echo "# tests run for adventurer: $SIZE3"
+echo "# failures detected adventurer: $FAIL3"
+echo "# successes for adventurer: $PASS3"
+
+echo "checking # cards in hand..."
+t3s1=$(grep "FAILED ASSERTION: # cards in hand has changed" $FILE3 -c)
+echo "# tests failing card to hand $t3s1"
+./tarantula $t3s1 $FAIL3 $PASS3 774
+
+echo "checking # cards in deck..."
+t3s2=$(grep "FAILED ASSERTION: # cards in deck has changed" $FILE3 -c)
+echo "# tests failing deck changed $t3s2"
+./tarantula $t3s2 $FAIL3 $PASS3 771
+
+echo "checking # coins in hand..."
+t3s3=$(grep "FAILED ASSERTION: # coins in hand has changed" $FILE3 -c)
+echo "# tests failing coin in hand $t3s3"
+./tarantula $t3s3 $FAIL3 $PASS3 772
+
+echo "checking # coins in dscd..."
+t3s4=$(grep "FAILED ASSERTION: # dscd in hand has changed" $FILE3 -c)
+echo "# tests failing change dscd  $t3s4"
+./tarantula $t3s4 $FAIL3 $PASS3 784

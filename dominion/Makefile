@@ -1,7 +1,7 @@
 #dominion makefile
 #Isaac Stallcup
 
-CFLAGS = -g -Wall -fpic -coverage -lm
+CFLAGS = -w -g -fpic -coverage -lm
 
 U = cd cardtest;
 
@@ -22,6 +22,9 @@ help:
 	@echo "thaia - run unit, card and random tests on Aileen Thai (ONID thaia)'s implementation of dominion.c"
 
 #makefile commands
+
+spider: all
+	./handler 3
 
 buildthaia: # "$T" changes directory to the thaia directory
 	@$T make rngs.o; make dominion.o
