@@ -11,7 +11,7 @@ int oracle(struct gameState g, int szhand, int szdeck, int badbit)
 	cassert(r != szhand, "# cards in hand has changed");
 	r = g.deckCount[0];
 	cassert(r != szdeck, "# cards in deck has changed");
-
+	/*
 	if (failure == 1 && badbit == 0)
 	{
 		//DUMP
@@ -29,7 +29,7 @@ int oracle(struct gameState g, int szhand, int szdeck, int badbit)
 		printf("Bad input did not cause error.\n");
 		printHand(0, &g);
 		printDeck(0, &g);
-	}
+	}*/
 
 	failure = 0;
 	return 0;
