@@ -1,0 +1,28 @@
+The process of creating tarantula was fairly straightforward. I wrote
+a bash script, since this application seemed ideal for it. The script
+takes in a seed (for the random tests used), then for each card/random
+test, first cleans the directory (to ensure that the .gcov file inspected
+is indeed for the desired test). Next, it runs the random test, and uses
+gcov to get line-by-line counts of the number of times each line of 
+dominion.c is run by the random test. It collects the number of tests run,
+the number of failures and uses them to calculate the number of successes.
+
+My random tests output specific failure messages for each failed assertion;
+searching each of the .out files produced by the random tests for these
+failure messages gives the number of specific failures for each assert
+statement. This number is then passed into the auxillary script, itself
+called tarantula.
+
+tarantula, if the number of failures is greater than zero, then parses
+dominion.c.gcov for the number of times the statement that is being
+tested has been run. For example, in dominion.c's implementation of
+smithy, the sstatement that smithy relies on to draw cards is line
+680, so cutting the first three non-whitespace characters in the line
+of dominion.c.gcov that contains line 980 of dominion.c will give the 
+number of times that line 680 is run by the smithy random test.
+
+This, along with the number of failures, number of passed tests and 
+total number of passing/failing tests, makes up the data required to
+run tarantula's algorhtim. The file tarantulamath.c (written in C
+to use floating point division) then takes in these numbers, performs
+the suspiciousness calculation and spits back out the suspiciousness.
