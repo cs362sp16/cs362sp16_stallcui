@@ -1,0 +1,71 @@
+make[1]: Entering directory '/home/isaac/git/cs362sp16_stallcui/dominion/thaia'
+make[1]: 'rngs.o' is up to date.
+make[1]: Leaving directory '/home/isaac/git/cs362sp16_stallcui/dominion/thaia'
+make[1]: Entering directory '/home/isaac/git/cs362sp16_stallcui/dominion/thaia'
+make[1]: 'dominion.o' is up to date.
+make[1]: Leaving directory '/home/isaac/git/cs362sp16_stallcui/dominion/thaia'
+make[1]: Entering directory '/home/isaac/git/cs362sp16_stallcui/dominion/thaia'
+make[1]: 'interface.o' is up to date.
+make[1]: Leaving directory '/home/isaac/git/cs362sp16_stallcui/dominion/thaia'
+./handler 3 randomdump1.out randomdump2.out randomdump3.out
+usage: handler SEED [randomtest1results] [randomtest2results] [randomtest3results]
+seed = 3
+
+File 'dominion.c'
+Lines executed:24.96% of 585
+Creating 'dominion.c.gcov'
+
+~~~~~~~~~~~TEST 1~~~~~~~~~~~
+# tests run for card 1: 746
+# failures detected card 1: 0
+# successes for card 1: 746
+checking # cards in hand...
+# tests failing card to hand 0
+checking # cards in deck...
+# tests failing changed deck 0
+
+File 'dominion.c'
+Lines executed:27.69% of 585
+Creating 'dominion.c.gcov'
+
+~~~~~~~~~~~TEST 2~~~~~~~~~~~
+# tests run for card 2:      746
+# failures detected card 2:  11
+# successes for card 2:      735
+checking # cards in hand...
+# tests failing card to hand 0
+checking # buys increase...
+# tests failing # buys is    0
+checking discarded estate...
+# tests failing discard      0
+checking coins...
+# tests failing numer coins  0
+checking estate -> hand...
+# tests failing gain estate  11
+~!non-failing test case!~
+      line run 355 times
+      line passed 344 times
+      suspiciousness = 0.681186
+~|end failing test case|~
+
+File 'dominion.c'
+Lines executed:23.93% of 585
+Creating 'dominion.c.gcov'
+
+~~~~~~~~~~~TEST 3~~~~~~~~~~~
+# tests run for adventurer: 746
+# failures detected adventurer: 51
+# successes for adventurer: 695
+checking # cards in hand...
+# tests failing card to hand 0
+checking # cards in deck...
+# tests failing deck changed 0
+checking # coins in hand...
+# tests failing coin in hand 51
+~!non-failing test case!~
+      line run 339 times
+      line passed 288 times
+      suspiciousness = 0.707019
+~|end failing test case|~
+checking # coins in dscd...
+# tests failing change dscd  0

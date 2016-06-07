@@ -11,9 +11,6 @@ echo "seed = $SEED"
 FILE1=$2
 FILE2=$3
 FILE3=$4
-#FILE1=randomdump1.out
-#FILE2=$FILE2
-#FILE3=$FILE3
 
 ./randomtestadventurer $SEED > $FILE3
 
@@ -81,7 +78,7 @@ echo "# tests failing numer coins  $t2s4"
 echo "checking estate -> hand..."
 t2s5=$(grep "FAILED ASSERTION: estate added to discard" $FILE2 -c)
 echo "# tests failing gain estate  $t2s5"
-./tarantula $t2s5 $FAIL2 $PASS2 1019
+./tarantula $t2s5 $FAIL2 $PASS2 1027
 
 make -s tidy
 make -s all
